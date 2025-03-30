@@ -23,7 +23,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "npm install vite --save-dev"
+
   },
   "eslintConfig": {
     "extends": [
