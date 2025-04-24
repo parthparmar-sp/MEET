@@ -13,7 +13,7 @@ import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
 import ChatIcon from '@mui/icons-material/Chat'
 import server from '../environment';
 
-const server_url = server.prod;
+const server_url = server;
 
 var connections = {};
 
@@ -404,9 +404,8 @@ export default function VideoMeetComponent() {
         try {
             let tracks = localVideoref.current.srcObject.getTracks()
             tracks.forEach(track => track.stop())
-           
         } catch (e) { }
-        window.location.href = "/home"
+        window.location.href = "/"
     }
 
     let openChat = () => {
@@ -455,37 +454,9 @@ export default function VideoMeetComponent() {
                 <div>
 
 
-                    <h2 style={{ color: "#FF9839" }}>Enter into Lobby</h2>
-            <TextField 
-                id="outlined-basic" 
-                label="Username" 
-                value={username} 
-                onChange={e => setUsername(e.target.value)} 
-                variant="outlined" 
-                
-            sx={{
-            backgroundColor: "#222",
-            input: { color: "#fff" },
-            label: { color: "#ccc" },
-            "& .MuiOutlinedInput-root": {
-            "& fieldset": { borderColor: "#FF9839" },
-            "&:hover fieldset": { borderColor: "#e68530" },
-            "&.Mui-focused fieldset": { borderColor: "#FF9839" },
-        },
-    }}
-/>
-<Button 
-    variant="contained" 
-    onClick={connect}
-    sx={{
-        backgroundColor: "#FF9839",
-        color: "#fff",
-        "&:hover": { backgroundColor: "#e68530" }
-    }}
->
-    Connect
-</Button>
-
+                    <h2>Enter into Lobby </h2>
+                    <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
+                    <Button variant="contained" onClick={connect}>Connect</Button>
 
 
                     <div>
@@ -498,84 +469,33 @@ export default function VideoMeetComponent() {
                 <div className={styles.meetVideoContainer}>
 
                     {showModal ? <div className={styles.chatRoom}>
-                    <div className={styles.chatContainer} style={{
-    backgroundColor: "#111",  
-    padding: "20px",  
-    borderRadius: "10px",  
-    boxShadow: "0px 4px 10px rgba(255, 152, 57, 0.3)",  
-    maxWidth: "500px",  
-    margin: "auto",
-}}>
-    <h1 style={{
-        color: "#FF9839",  
-        fontSize: "24px",  
-        textAlign: "center",  
-        marginBottom: "15px"
-    }}>Chat</h1>
 
-    <div className={styles.chattingDisplay} style={{
-        height: "300px",  
-        overflowY: "auto",  
-        padding: "10px",  
-        backgroundColor: "#222",  
-        borderRadius: "8px",
-        boxShadow: "inset 0px 0px 10px rgba(255, 152, 57, 0.2)"
-    }}>
-        {messages.length !== 0 ? messages.map((item, index) => (
-            <div style={{
-                marginBottom: "15px",
-                padding: "10px",
-                borderRadius: "8px",
-                backgroundColor: item.sender === "You" ? "#FF9839" : "#333",
-                color: item.sender === "You" ? "#000" : "#fff",
-                alignSelf: item.sender === "You" ? "flex-end" : "flex-start",
-                maxWidth: "80%",
-            }} key={index}>
-                <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.sender}</p>
-                <p>{item.data}</p>
-            </div>
-        )) : <p style={{ color: "#ccc", textAlign: "center" }}>No Messages Yet</p>}
-    </div>
+                        <div className={styles.chatContainer}>
+                            <h1>Chat</h1>
 
-    <div className={styles.chattingArea} style={{
-        display: "flex",  
-        marginTop: "10px",  
-        gap: "10px"
-    }}>
-        <TextField 
-            value={message} 
-            onChange={(e) => setMessage(e.target.value)} 
-            id="outlined-basic" 
-            label="Enter Your Chat" 
-            variant="outlined" 
-            fullWidth
-            sx={{
-                backgroundColor: "#222",
-                input: { color: "#fff" },
-                label: { color: "#ccc" },
-                "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "#FF9839" },
-                    "&:hover fieldset": { borderColor: "#e68530" },
-                    "&.Mui-focused fieldset": { borderColor: "#FF9839" },
-                },
-            }}
-        />
-        <Button 
-            variant='contained' 
-            onClick={sendMessage}
-            sx={{
-                backgroundColor: "#FF9839",
-                color: "#000",
-                fontWeight: "bold",
-                ":hover": { backgroundColor: "#e68530" },
-                padding: "10px 20px"
-            }}
-        >
-            Send
-        </Button>
-    </div>
-</div>
+                            <div className={styles.chattingDisplay}>
 
+                                {messages.length !== 0 ? messages.map((item, index) => {
+
+                                    console.log(messages)
+                                    return (
+                                        <div style={{ marginBottom: "20px" }} key={index}>
+                                            <p style={{ fontWeight: "bold" }}>{item.sender}</p>
+                                            <p>{item.data}</p>
+                                        </div>
+                                    )
+                                }) : <p>No Messages Yet</p>}
+
+
+                            </div>
+
+                            <div className={styles.chattingArea}>
+                                <TextField value={message} onChange={(e) => setMessage(e.target.value)} id="outlined-basic" label="Enter Your chat" variant="outlined" />
+                                <Button variant='contained' onClick={sendMessage}>Send</Button>
+                            </div>
+
+
+                        </div>
                     </div> : <></>}
 
 
@@ -583,7 +503,7 @@ export default function VideoMeetComponent() {
                         <IconButton onClick={handleVideo} style={{ color: "white" }}>
                             {(video === true) ? <VideocamIcon /> : <VideocamOffIcon />}
                         </IconButton>
-                        <IconButton onClick={handleEndCall} style={{ color: "red" }} >
+                        <IconButton onClick={handleEndCall} style={{ color: "red" }}>
                             <CallEndIcon  />
                         </IconButton>
                         <IconButton onClick={handleAudio} style={{ color: "white" }}>
